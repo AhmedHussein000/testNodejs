@@ -13,33 +13,6 @@ mongoose.connect('mongodb+srv://ahhussein000:ahmed123@cluster0.pnpskkp.mongodb.n
 
 
 
-
-
-// app.get('/getusers', (red, res) => {
-//     Article.find({}).then((user) => { res.send(user); }).catch((error) => {
-//         console.log(error)
-//         res.status(500).send('Internal Server Error');
-//     });
-//     // res.send('Hello World!');
-// })
-
-// app.post('/getusers/:quary', (red, res) => {
-//     const quary = req.params.quary
-//     Article.insertOne({ title: req.params.quary, body: req.params.quary, numberOfLikes: req.params.quary }).then((user) => { res.send(user); }).catch((error) => {
-//         console.log(error)
-//         res.status(500).send('Internal Server Error');
-//     });
-
-//     // Article.find({}).then((user) => { res.send(user); }).catch((error) => {
-//     //     console.log(error)
-//     //     res.status(500).send('Internal Server Error');
-//     // });
-//     // res.send(quary);
-//     console.log(quary);
-// })
-
-
-
 app.post('/articls', async (req, res) => {
     const newArtical = new Article()
     try {
@@ -114,17 +87,19 @@ app.delete('/articls/', async (req, res) => {
 })
 
 
-app.update('/articls/:articleID', async (req, res) => {
+app.get('/varticls', async (req, res) => {
 
-    const id = req.params.articleID
+    // Article.find({}).then((article) => { res.send(article) }).catch((err) => { res.send(err) })
 
     try {
-        const article = await Article.findByIdAndDelete(id)
-        res.json(article)
-        return
+        const allArticls = await Article.find()
+        res.render("viewArticals.ejs", { allArticls: allArticls })
     } catch (error) {
-        console.log("error", id)
+        console.log("error ejs")
+        res.status(500).send('Internal Server Error');
+
     }
+
 
 })
 
